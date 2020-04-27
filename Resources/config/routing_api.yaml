@@ -1,0 +1,4 @@
+sulu_megamenus:
+    type: rest
+    resource: TheCocktail\Bundle\MegaMenuBundle\Controller\Admin\MegamenuController
+    name_prefix: sulu_megamenu.

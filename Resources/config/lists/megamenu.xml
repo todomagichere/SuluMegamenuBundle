@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<list xmlns="http://schemas.sulu.io/list-builder/list">
+    <key>megamenu</key>
+    
+    <joins name="parent">
+        <join>
+            <entity-name>TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem</entity-name>
+            <field-name>TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem.parent</field-name>
+        </join>
+    </joins>
+
+    <properties>
+        <property name="id" translation="sulu_admin.id" visibility="no">
+            <field-name>id</field-name>
+            <entity-name>TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem</entity-name>
+        </property>
+        <property name="title" translation="sulu_admin.title" visibility="always" >
+            <field-name>title</field-name>
+            <entity-name>TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem</entity-name>
+        </property>
+        <property name="position" translation="app.position" visibility="always" >
+            <field-name>position</field-name>
+            <entity-name>TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem</entity-name>
+        </property>
+        <property name="created" translation="sulu_admin.created" visibility="no" type="datetime">
+            <field-name>created</field-name>
+            <entity-name>TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem</entity-name>
+        </property>
+        <property name="changed" translation="sulu_admin.changed" visibility="no" type="datetime">
+            <field-name>changed</field-name>
+            <entity-name>TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem</entity-name>
+        </property>
+    </properties>
+</list>

@@ -1,0 +1,36 @@
+# PHPUnit
+/phpunit.xml
+.phpunit.result.cache
+
+# composer
+/composer.phar
+/composer.lock
+/auth.json
+/vendor
+
+# IDEs
+.idea/*
+*.iml
+*~
+
+# Cached Files
+*~
+
+# Git Authentication File
+/auth.json
+
+# System files
+.DS_Store
+
+# Dependencies
+/vendor/
+
+# frontend caches
+.tmp/
+.sass-cache/
+node_modules/
+npm-debug.log
+
+# php-cs-fixer
+.php_cs.cache
+php-cs-fixer

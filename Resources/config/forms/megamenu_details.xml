@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<form xmlns="http://schemas.sulu.io/template/template"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/form-1.0.xsd"
+>
+    <key>nmegamenu_details</key>
+
+    <properties>
+        <property name="title" type="text_line" mandatory="true" colspan="9">
+            <meta>
+                <title>sulu_admin.title</title>
+            </meta>
+            <params>
+                <param name="headline" value="true"/>
+            </params>
+        </property>
+        <property name="position" type="text_line" mandatory="true" colspan="3">
+            <meta>
+                <title>app.position</title>
+            </meta>
+            <params>
+                <param name="default_value" value="0"/>
+                <param name="headline" value="true"/>
+            </params>
+        </property>
+        <section name="data">
+            <meta>
+                <title lang="en">Linked content</title>
+                <title lang="es">Contenido enlazado</title>
+            </meta>
+            <properties>
+                <property name="uuid" type="single_page_selection">
+                    <meta>
+                        <title lang="es">Enlace Interno</title>
+                        <title lang="en">Enlace Interno</title>
+                        <info_text lang="en">Enlace a página interna</info_text>
+                        <info_text lang="es">Enlace a página interna</info_text>
+                    </meta>
+                </property>
+                <property name="link" type="text_line">
+                    <meta>
+                        <title lang="es">Enlace Externo</title>
+                        <title lang="en">Enlace Externo</title>
+                        <info_text lang="es">Ej: https://example.com/ruta ó /ruta</info_text>
+                        <info_text lang="en">Ej: https://example.com/ruta ó /ruta</info_text>
+                    </meta>
+                </property>
+            </properties>
+        </section>
+    </properties>
+</form>
