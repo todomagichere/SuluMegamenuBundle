@@ -18,11 +18,11 @@ use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 
 class MegamenuAdmin extends Admin
 {
-    const SECURITY_CONTEXT = 'sulu.settings.categories';
+    const SECURITY_CONTEXT = 'sulu.settings.megamenu';
 
-    const NAVIGATION_TAB_VIEW = 'navigation_tab_view';
-    const NAVIGATION_FORM_KEY = 'navigation_details';
-    
+    const NAVIGATION_TAB_VIEW = 'sulu_megamenu.navigation_tab_view';
+    const NAVIGATION_FORM_KEY = 'sulu_megamenu.navigation_details';
+
     private ViewBuilderFactoryInterface $viewBuilderFactory;
     private WebspaceManagerInterface $webspaceManager;
     private SecurityCheckerInterface $securityChecker;
@@ -42,22 +42,28 @@ class MegamenuAdmin extends Admin
 
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void
     {
-        $navigation = new NavigationItem('app.navigation');
-        $navigation->setPosition(40);
-        $navigation->setIcon('fa-bars');
-        $navigation->setView(self::NAVIGATION_TAB_VIEW);
+        if ($this->securityChecker->hasPermission(static::SECURITY_CONTEXT, PermissionTypes::EDIT)) {
+            $navigation = new NavigationItem('sulu_megamenu.navigation.title');
+            $navigation->setPosition(40);
+            $navigation->setIcon('fa-bars');
+            $navigation->setView(self::NAVIGATION_TAB_VIEW);
 
-        $navigationItemCollection->add($navigation);
+            $navigationItemCollection->add($navigation);
+        }
     }
 
     public function configureViews(ViewCollection $viewCollection): void
     {
         $locales = $this->webspaceManager->getAllLocales();
 
-        $formToolbarActions = [
-            new ToolbarAction('sulu_admin.save'),
-            new ToolbarAction('sulu_admin.delete')
-        ];
+        $formToolbarActions = [];
+        if ($this->securityChecker->hasPermission(self::SECURITY_CONTEXT, PermissionTypes::EDIT)) {
+            $formToolbarActions[] = new ToolbarAction('sulu_admin.save');
+        }
+
+        if ($this->securityChecker->hasPermission(self::SECURITY_CONTEXT, PermissionTypes::DELETE)) {
+            $formToolbarActions[] = new ToolbarAction('sulu_admin.delete');
+        }
 
         $viewCollection->add(
             $this->viewBuilderFactory
@@ -68,13 +74,14 @@ class MegamenuAdmin extends Admin
         $webspaceCollection = $this->webspaceManager->getWebspaceCollection();
 
         foreach ($webspaceCollection->getWebspaces() as $webspace) {
-            $navigationListView = 'app.navigation_list_' . $webspace->getKey();
-            $navigationAddView = 'app.navigation_add_' . $webspace->getKey();
-            $navigationEditView = 'app.navigation_edit_' . $webspace->getKey();
+            $navigationListView = 'sulu_megamenu.navigation_list_' . $webspace->getKey();
+            $navigationAddView = 'sulu_megamenu.navigation_add_' . $webspace->getKey();
+            $navigationEditView = 'sulu_megamenu.navigation_edit_' . $webspace->getKey();
 
-            $listToolbarActions = [
-                new ToolbarAction('sulu_admin.delete')
-            ];
+            $listToolbarActions = [];
+            if ($this->securityChecker->hasPermission(self::SECURITY_CONTEXT, PermissionTypes::DELETE)) {
+                $listToolbarActions[] = new ToolbarAction('sulu_admin.delete');
+            }
 
             $listView = $this->viewBuilderFactory->createListViewBuilder($navigationListView, '/'. $webspace->getKey(). '/:locale')
                 ->setResourceKey(MenuItem::RESOURCE_KEY)
@@ -134,7 +141,7 @@ class MegamenuAdmin extends Admin
     public function getSecurityContexts()
     {
         return [
-            'Sulu' => [
+            self::SULU_ADMIN_SECURITY_SYSTEM => [
                 'Settings' => [
                     self::SECURITY_CONTEXT => [
                         PermissionTypes::VIEW,

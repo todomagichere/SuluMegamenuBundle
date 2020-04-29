@@ -62,6 +62,7 @@ sulu_megamenu:
             twig_global: false # Opcional, este menu no estará disponible en la variable global sulu_megamenu
             title: 'Footer Bottom'
 ```
+*Debes entrar en el menu de administración y dar los permisos correspondientes para los menús* 
 
 Ahora podrás entrar en el backend de Sulu y configurar los menús. 
 

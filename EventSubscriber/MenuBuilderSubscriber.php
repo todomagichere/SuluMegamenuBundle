@@ -41,9 +41,11 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
         $attributes = $request->attributes->get('_sulu');
 
         /** @var Webspace|null $webspace */
-        if (!$webspace = $attributes->getAttribute('webspace')) {
+        $webspace = $attributes->getAttribute('webspace');
+        if (!$webspace) {
             return;
         }
+
         $data = [];
         foreach ($this->megamenus as $resourceKey => $menu) {
             if (true === $menu['twig_global']) {

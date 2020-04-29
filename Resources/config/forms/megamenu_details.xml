@@ -16,7 +16,7 @@
         </property>
         <property name="position" type="text_line" mandatory="true" colspan="3">
             <meta>
-                <title>app.position</title>
+                <title>sulu_megamenu.position</title>
             </meta>
             <params>
                 <param name="default_value" value="0"/>

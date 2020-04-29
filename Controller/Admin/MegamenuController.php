@@ -117,7 +117,7 @@ class MegamenuController extends AbstractRestController implements ClassResource
         $listRepresentation = new ListRepresentation(
             $data,
             MenuItem::RESOURCE_KEY,
-            'app.get_megamenus',
+            'sulu_megamenus.get_megamenus',
             $request->request->all(),
             $listBuilder->getCurrentPage(),
             $listBuilder->getLimit(),
