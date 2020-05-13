@@ -3,7 +3,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/form-1.0.xsd"
 >
-    <key>nmegamenu_details</key>
+    <key>megamenu_details</key>
 
     <properties>
         <property name="title" type="text_line" mandatory="true" colspan="9">
@@ -14,7 +14,7 @@
                 <param name="headline" value="true"/>
             </params>
         </property>
-        <property name="position" type="text_line" mandatory="true" colspan="3">
+        <property name="position" type="number" mandatory="true" colspan="3">
             <meta>
                 <title>sulu_megamenu.position</title>
             </meta>

@@ -1,4 +1,5 @@
 {
     "sulu.settings.megamenu": "Menus",
-    "sulu_megamenu.navigation.title": "Menus"
+    "sulu_megamenu.navigation.title": "Menus",
+    "sulu_megamenu.position": "Position"
 }
