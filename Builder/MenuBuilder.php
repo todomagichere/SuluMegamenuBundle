@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TheCocktail\Bundle\MegaMenuBundle\Builder;
 
 use TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem;
+use TheCocktail\Bundle\MegaMenuBundle\Exception\NotPublishedException;
 use TheCocktail\Bundle\MegaMenuBundle\Repository\MenuItemRepository;
 use FOS\HttpCacheBundle\Http\SymfonyResponseTagger;
 use Sulu\Component\Content\Compat\Structure\StructureBridge;
@@ -72,7 +73,11 @@ class MenuBuilder
     {
         $data = [];
         foreach ($menuItems as $menuItem) {
-            $url = $this->resolveUrl($menuItem);
+            try {
+                $url = $this->resolveUrl($menuItem);
+            } catch (NotPublishedException $exception) {
+                continue;
+            }
             $item = [
                 'id' => $menuItem->getId(),
                 'title' => $menuItem->getTitle(),
@@ -94,7 +99,9 @@ class MenuBuilder
             return $item->getLink() ?? null;
         }
         $structure = $this->contentMapper->load($uuid, $item->getResourceKey(), $item->getLocale());
-
+        if (!$structure->getPublishedState()) {
+            throw new NotPublishedException();
+        }
         if (!$structure instanceof StructureBridge) {
             return null;
         }
