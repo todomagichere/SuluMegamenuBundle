@@ -198,14 +198,9 @@ class MegamenuController extends AbstractRestController implements ClassResource
             $entity->setParent($parent);
         }
 
-        if ($data['uuid']) {
-            $entity->setUuid($data['uuid']);
-        }
-
-        if ($data['link']) {
-            $entity->setLink($data['link']);
-        }
-
+        $entity->setUuid($data['uuid']);
+        $entity->setLink($data['link']);
+        
         return $entity;
     }
 

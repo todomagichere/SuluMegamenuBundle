@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TheCocktail\Bundle\MegaMenuBundle\Builder;
 
+use Sulu\Component\DocumentManager\Exception\DocumentNotFoundException;
 use TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem;
 use TheCocktail\Bundle\MegaMenuBundle\Exception\NotPublishedException;
 use TheCocktail\Bundle\MegaMenuBundle\Repository\MenuItemRepository;
@@ -75,7 +76,7 @@ class MenuBuilder
         foreach ($menuItems as $menuItem) {
             try {
                 $url = $this->resolveUrl($menuItem);
-            } catch (NotPublishedException $exception) {
+            } catch (NotPublishedException|DocumentNotFoundException $exception) {
                 continue;
             }
             $item = [
