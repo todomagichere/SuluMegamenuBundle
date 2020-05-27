@@ -72,6 +72,9 @@ class MenuBuilder
      */
     private function recursiveList(array $menuItems): array
     {
+        usort($menuItems, function($a, $b) {
+            return ($a->getPosition() === $b->getPosition()) ? 0 : (($a->getPosition() < $b->getPosition()) ? -1: 1);
+        });
         $data = [];
         foreach ($menuItems as $menuItem) {
             try {
@@ -84,7 +87,6 @@ class MenuBuilder
                 'title' => $menuItem->getTitle(),
                 'url' => $url,
                 'hasChildren' => $menuItem->hasChildren()
-
             ];
             if ($menuItem->getChildren()->count()) {
                 $item['children'] = $this->recursiveList($menuItem->getChildren()->toArray());
