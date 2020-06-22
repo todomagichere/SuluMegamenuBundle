@@ -45,6 +45,15 @@
                         <info_text lang="en">Ej: https://example.com/ruta ó /ruta</info_text>
                     </meta>
                 </property>
+                <property name="media" type="single_media_selection">
+                    <meta>
+                        <title lang="en">Image</title>
+                        <title lang="es">Imágen</title>
+                    </meta>
+                    <params>
+                        <param name="types" value="image"/>
+                    </params>
+                </property>
             </properties>
         </section>
     </properties>
