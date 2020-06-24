@@ -86,7 +86,7 @@ class MenuBuilder
                 'id' => $menuItem->getId(),
                 'title' => $menuItem->getTitle(),
                 'url' => $url,
-                'media' => $menuItem->getMedia(),
+                'media' => $menuItem->getMedia()->getId(),
                 'hasChildren' => $menuItem->hasChildren()
             ];
             if ($menuItem->getChildren()->count()) {
