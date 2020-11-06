@@ -63,7 +63,9 @@ class MegamenuController extends AbstractRestController implements ClassResource
     public function cgetAction(Request $request): Response
     {
         $locale = $request->query->get('locale');
-        $webspaceKey = $request->query->get('webspace');
+        if (!$webspaceKey = $request->query->get('webspace')) {
+            throw new WebspaceNotFoundException('Webspace key not found in request');
+        }
 
         if (!$webspace = $this->webspaceManager->getWebspaceCollection()->getWebspace($webspaceKey)) {
             throw new WebspaceNotFoundException(sprintf('Webspace %s not found', $webspaceKey));
