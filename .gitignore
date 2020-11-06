@@ -34,3 +34,4 @@ npm-debug.log
 # php-cs-fixer
 .php_cs.cache
 php-cs-fixer
+.phpcs-cache
