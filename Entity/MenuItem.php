@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Sulu\Bundle\MediaBundle\Entity\Media;
+use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 
 /**
  * @ORM\Entity(repositoryClass="TheCocktail\Bundle\MegaMenuBundle\Repository\MenuItemRepository")
@@ -69,6 +71,15 @@ class MenuItem
     protected ?string $link = null;
 
     /**
+     * @var MediaInterface|null
+     *
+     * @Serializer\Exclude()
+     * @ORM\ManyToOne(targetEntity="Sulu\Bundle\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     */
+    protected ?Media $media = null;
+
+    /**
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
@@ -78,7 +89,7 @@ class MenuItem
     /**
      * @var MenuItem
      *
-     * Many Categories have One Category.
+     * Many MenuItems have One Parent.
      * @ORM\ManyToOne(targetEntity="MenuItem", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
@@ -209,6 +220,38 @@ class MenuItem
         $this->link = $link;
 
         return $this;
+    }
+
+    /**
+     * @return MediaInterface|null
+     */
+    public function getMedia(): ?MediaInterface
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param MediaInterface|null $media
+     */
+    public function setMedia(?MediaInterface $media): MenuItem
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * @return
+     *
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("media")
+     */
+    public function getMediaApi()
+    {
+        if ($this->media) {
+            return ['id' => $this->media->getId()];
+        }
+        return null;
     }
 
     /**

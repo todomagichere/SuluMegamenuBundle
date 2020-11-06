@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TheCocktail\Bundle\MegaMenuBundle\Controller\Admin;
 
+use Sulu\Bundle\MediaBundle\Media\Manager\MediaManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem;
 use TheCocktail\Bundle\MegaMenuBundle\Event\MenuEvent;
@@ -30,6 +31,7 @@ class MegamenuController extends AbstractRestController implements ClassResource
     private DoctrineListBuilderFactoryInterface $listBuilderFactory;
     private WebspaceManagerInterface $webspaceManager;
     private EventDispatcherInterface $eventDispatcher;
+    private MediaManagerInterface $mediaManager;
     private array $megamenus;
 
     private $fieldDescriptors;
@@ -42,6 +44,7 @@ class MegamenuController extends AbstractRestController implements ClassResource
         DoctrineListBuilderFactoryInterface $listBuilderFactory,
         WebspaceManagerInterface $webspaceManager,
         EventDispatcherInterface $eventDispatcher,
+        MediaManagerInterface $mediaManager,
         array $megamenus
     ) {
         parent::__construct($viewHandler);
@@ -50,14 +53,15 @@ class MegamenuController extends AbstractRestController implements ClassResource
         $this->restHelper = $restHelper;
         $this->listBuilderFactory = $listBuilderFactory;
         $this->webspaceManager = $webspaceManager;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->mediaManager = $mediaManager;
+        $this->megamenus = $megamenus;
 
         $this->fieldDescriptors = [];
         $this->fieldDescriptors['id'] = new DoctrineFieldDescriptor('id', 'id', MenuItem::class);
         $this->fieldDescriptors['title'] = new DoctrineFieldDescriptor('title', 'title', MenuItem::class);
         $this->fieldDescriptors['created'] = new DoctrineFieldDescriptor('created', 'created', MenuItem::class);
         $this->fieldDescriptors['changed'] = new DoctrineFieldDescriptor('changed', 'changed', MenuItem::class);
-        $this->megamenus = $megamenus;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function cgetAction(Request $request): Response
@@ -191,6 +195,16 @@ class MegamenuController extends AbstractRestController implements ClassResource
         $entity->setLocale($data['locale']);
         $entity->setPosition((int) $data['position']);
 
+        if ($data['media']) {
+            $mediaId = $data['media']['id'];
+            if ($mediaId) {
+                $media = $this->mediaManager->getById($mediaId, $data['locale']);
+                $entity->setMedia($media->getEntity());
+            } else {
+                $entity->setMedia(null);
+            }
+        }
+
         $entity->setResourceKey($data['resourceKey'] ?? $entity->getResourceKey());
 
         $entity->setWebspace($data['webspace']);
@@ -200,14 +214,9 @@ class MegamenuController extends AbstractRestController implements ClassResource
             $entity->setParent($parent);
         }
 
-        if ($data['uuid']) {
-            $entity->setUuid($data['uuid']);
-        }
-
-        if ($data['link']) {
-            $entity->setLink($data['link']);
-        }
-
+        $entity->setUuid($data['uuid']);
+        $entity->setLink($data['link']);
+        
         return $entity;
     }
 

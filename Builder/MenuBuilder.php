@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace TheCocktail\Bundle\MegaMenuBundle\Builder;
 
+use Sulu\Component\DocumentManager\Exception\DocumentNotFoundException;
 use TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem;
+use TheCocktail\Bundle\MegaMenuBundle\Exception\NotPublishedException;
 use TheCocktail\Bundle\MegaMenuBundle\Repository\MenuItemRepository;
 use FOS\HttpCacheBundle\Http\SymfonyResponseTagger;
 use Sulu\Component\Content\Compat\Structure\StructureBridge;
@@ -70,15 +72,22 @@ class MenuBuilder
      */
     private function recursiveList(array $menuItems): array
     {
+        usort($menuItems, function($a, $b) {
+            return ($a->getPosition() === $b->getPosition()) ? 0 : (($a->getPosition() < $b->getPosition()) ? -1: 1);
+        });
         $data = [];
         foreach ($menuItems as $menuItem) {
-            $url = $this->resolveUrl($menuItem);
+            try {
+                $url = $this->resolveUrl($menuItem);
+            } catch (NotPublishedException|DocumentNotFoundException $exception) {
+                continue;
+            }
             $item = [
                 'id' => $menuItem->getId(),
                 'title' => $menuItem->getTitle(),
                 'url' => $url,
+                'media' => $menuItem->getMedia() ? $menuItem->getMedia()->getId() : null,
                 'hasChildren' => $menuItem->hasChildren()
-
             ];
             if ($menuItem->getChildren()->count()) {
                 $item['children'] = $this->recursiveList($menuItem->getChildren()->toArray());
@@ -94,7 +103,9 @@ class MenuBuilder
             return $item->getLink() ?? null;
         }
         $structure = $this->contentMapper->load($uuid, $item->getResourceKey(), $item->getLocale());
-
+        if (!$structure->getPublishedState()) {
+            throw new NotPublishedException();
+        }
         if (!$structure instanceof StructureBridge) {
             return null;
         }

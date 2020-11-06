@@ -21,7 +21,7 @@ class MegamenuAdmin extends Admin
     const SECURITY_CONTEXT = 'sulu.settings.megamenu';
 
     const NAVIGATION_TAB_VIEW = 'sulu_megamenu.navigation_tab_view';
-    const NAVIGATION_FORM_KEY = 'sulu_megamenu.navigation_details';
+    const NAVIGATION_FORM_KEY = 'megamenu_details';
 
     private ViewBuilderFactoryInterface $viewBuilderFactory;
     private WebspaceManagerInterface $webspaceManager;
