@@ -41,30 +41,6 @@ class SuluMegamenuExtension extends Extension implements PrependExtensionInterfa
                 ]
             );
         }
-
-        if ($container->hasExtension('sulu_core')) {
-            $container->prependExtensionConfig(
-                'sulu_core',
-                [
-                    'content' => [
-                        'structure' => [
-                            'required_properties' => [
-                                'megamenu' => ['title'],
-                            ],
-                            'paths' => [
-                                'megamenu' => [
-                                    'path' => '%kernel.project_dir%/config/templates/megamenus',
-                                    'type' => 'megamenu',
-                                ],
-                            ],
-                            'default_type' => [
-                                'megamenu' => 'default',
-                            ],
-                        ],
-                    ],
-                ]
-            );
-        }
     }
 
     public function load(array $configs, ContainerBuilder $container): void
