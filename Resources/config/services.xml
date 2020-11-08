@@ -55,5 +55,15 @@
             <argument type="service" id="cache.app"/>
             <tag name="kernel.event_subscriber"/>
         </service>
+
+        <service id="TheCocktail\Bundle\MegaMenuBundle\Twig\RenderExtension">
+            <tag name="twig.extension"/>
+        </service>
+
+        <service id="TheCocktail\Bundle\MegaMenuBundle\Twig\RenderRuntime">
+            <argument type="service" id="TheCocktail\Bundle\MegaMenuBundle\Builder\MenuBuilder"/>
+            <argument type="service" id="twig"/>
+            <tag name="twig.runtime"/>
+        </service>
     </services>
 </container>

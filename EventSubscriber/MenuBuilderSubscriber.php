@@ -33,22 +33,24 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
 
     public function onKernelController(ControllerEvent $event): void
     {
-        $request = $event->getRequest();
-        if (!$request->attributes->has('_sulu')) {
+        if (!$event->isMasterRequest() || $event->getRequest()->isXmlHttpRequest()) {
             return;
         }
-        /** @var RequestAttributes $attributes */
-        $attributes = $request->attributes->get('_sulu');
+        $request = $event->getRequest();
 
-        /** @var Webspace|null $webspace */
-        $webspace = $attributes->getAttribute('webspace');
-        if (!$webspace) {
+        if (!$attributes = $request->attributes->get('_sulu')) {
+            return;
+        }
+
+        /** @var RequestAttributes $attributes */
+        if (!$webspace = $attributes->getAttribute('webspace')) {
             return;
         }
 
         $data = [];
         foreach ($this->megamenus as $resourceKey => $menu) {
             if (true === $menu['twig_global']) {
+                /** @var Webspace|null $webspace */
                 $data[$resourceKey] = $this->builder->build($webspace->getKey(), $resourceKey, $request->getLocale());
             }
         }

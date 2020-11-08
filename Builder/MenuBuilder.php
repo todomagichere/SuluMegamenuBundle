@@ -72,7 +72,7 @@ class MenuBuilder
      */
     private function recursiveList(array $menuItems): array
     {
-        usort($menuItems, function($a, $b) {
+        usort($menuItems, function ($a, $b) {
             return ($a->getPosition() === $b->getPosition()) ? 0 : (($a->getPosition() < $b->getPosition()) ? -1: 1);
         });
         $data = [];
@@ -82,11 +82,12 @@ class MenuBuilder
             } catch (NotPublishedException|DocumentNotFoundException $exception) {
                 continue;
             }
+            $media = $menuItem->getMedia();
             $item = [
                 'id' => $menuItem->getId(),
                 'title' => $menuItem->getTitle(),
                 'url' => $url,
-                'media' => $menuItem->getMedia() ? $menuItem->getMedia()->getId() : null,
+                'media' => $media ? $media->getId() : null,
                 'hasChildren' => $menuItem->hasChildren()
             ];
             if ($menuItem->getChildren()->count()) {

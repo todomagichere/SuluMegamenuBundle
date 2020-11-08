@@ -2,6 +2,7 @@
 
 namespace TheCocktail\Bundle\MegaMenuBundle\DependencyInjection;
 
+use Sulu\Component\Content\Compat\Structure\SnippetBridge;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -34,6 +35,30 @@ class SuluMegamenuExtension extends Extension implements PrependExtensionInterfa
                             'routes' => [
                                 'list' => 'sulu_megamenu.get_megamenus',
                                 'detail' => 'sulu_megamenu.get_megamenu',
+                            ],
+                        ],
+                    ],
+                ]
+            );
+        }
+
+        if ($container->hasExtension('sulu_core')) {
+            $container->prependExtensionConfig(
+                'sulu_core',
+                [
+                    'content' => [
+                        'structure' => [
+                            'required_properties' => [
+                                'megamenu' => ['title'],
+                            ],
+                            'paths' => [
+                                'megamenu' => [
+                                    'path' => '%kernel.project_dir%/config/templates/megamenus',
+                                    'type' => 'megamenu',
+                                ],
+                            ],
+                            'default_type' => [
+                                'megamenu' => 'default',
                             ],
                         ],
                     ],

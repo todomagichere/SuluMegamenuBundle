@@ -77,7 +77,7 @@ class MenuItem
      * @ORM\ManyToOne(targetEntity="Sulu\Bundle\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
-    protected ?Media $media = null;
+    protected ?MediaInterface $media = null;
 
     /**
      * @var int
@@ -241,7 +241,7 @@ class MenuItem
     }
 
     /**
-     * @return
+     * @return array|null
      *
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("media")

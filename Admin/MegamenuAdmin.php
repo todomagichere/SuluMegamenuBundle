@@ -56,13 +56,21 @@ class MegamenuAdmin extends Admin
     {
         $locales = $this->webspaceManager->getAllLocales();
 
-        $formToolbarActions = [];
-        if ($this->securityChecker->hasPermission(self::SECURITY_CONTEXT, PermissionTypes::EDIT)) {
-            $formToolbarActions[] = new ToolbarAction('sulu_admin.save');
+        $listToolbarActions = [];
+        $formToolbarActionsWithType = [];
+
+        if ($this->securityChecker->hasPermission(static::SECURITY_CONTEXT, PermissionTypes::ADD)) {
+            $listToolbarActions[] = new ToolbarAction('sulu_admin.add');
         }
 
-        if ($this->securityChecker->hasPermission(self::SECURITY_CONTEXT, PermissionTypes::DELETE)) {
-            $formToolbarActions[] = new ToolbarAction('sulu_admin.delete');
+        if ($this->securityChecker->hasPermission(static::SECURITY_CONTEXT, PermissionTypes::EDIT)) {
+            $formToolbarActionsWithType[] = new ToolbarAction('sulu_admin.save');
+            $formToolbarActionsWithType[] = new ToolbarAction('sulu_admin.type', ['sort_by' => 'title']);
+        }
+
+        if ($this->securityChecker->hasPermission(static::SECURITY_CONTEXT, PermissionTypes::DELETE)) {
+            $formToolbarActionsWithType[] = new ToolbarAction('sulu_admin.delete');
+            $listToolbarActions[] = new ToolbarAction('sulu_admin.delete');
         }
 
         $viewCollection->add(
@@ -77,11 +85,6 @@ class MegamenuAdmin extends Admin
             $navigationListView = 'sulu_megamenu.navigation_list_' . $webspace->getKey();
             $navigationAddView = 'sulu_megamenu.navigation_add_' . $webspace->getKey();
             $navigationEditView = 'sulu_megamenu.navigation_edit_' . $webspace->getKey();
-
-            $listToolbarActions = [];
-            if ($this->securityChecker->hasPermission(self::SECURITY_CONTEXT, PermissionTypes::DELETE)) {
-                $listToolbarActions[] = new ToolbarAction('sulu_admin.delete');
-            }
 
             $listView = $this->viewBuilderFactory->createListViewBuilder($navigationListView, '/'. $webspace->getKey(). '/:locale')
                 ->setResourceKey(MenuItem::RESOURCE_KEY)
@@ -113,7 +116,7 @@ class MegamenuAdmin extends Admin
                 ->setFormKey(self::NAVIGATION_FORM_KEY)
                 ->setTabTitle('sulu_admin.details')
                 ->setEditView($navigationEditView)
-                ->addToolbarActions([new ToolbarAction('sulu_admin.save')])
+                ->addToolbarActions($formToolbarActionsWithType)
                 ->addRouterAttributesToFormRequest(['locale', 'resourceKey', 'webspace', 'parentId'])
                 ->setParent($navigationAddView);
             $viewCollection->add($addDetailsFormView);
@@ -131,7 +134,7 @@ class MegamenuAdmin extends Admin
                 ->setResourceKey(MenuItem::RESOURCE_KEY)
                 ->setFormKey(self::NAVIGATION_FORM_KEY)
                 ->setTabTitle('sulu_admin.details')
-                ->addToolbarActions($formToolbarActions)
+                ->addToolbarActions($formToolbarActionsWithType)
                 ->addRouterAttributesToFormRequest(['locale', 'resourceKey', 'webspace', 'parentId'])
                 ->setParent($navigationEditView);
             $viewCollection->add($editDetailsFormView);

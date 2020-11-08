@@ -1,0 +1,14 @@
+<ul class="{{ resource }}__menu">
+  {% for item in items %}
+    <li class="{{ resource }}__menu-item {{ resource }}__menu-title">
+      {% if item.url %}
+        <a href="{{ item.url }}" title="{{ item.title }}">{{ item.title }}</a>
+      {% else %}
+        {{ item.title }}
+      {% endif %}
+      {% if item.hasChildren %}
+        {% include '@SuluMegamenu/section.html.twig' with {'items': item.children } %}
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
