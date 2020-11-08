@@ -58,12 +58,14 @@
 
         <service id="TheCocktail\Bundle\MegaMenuBundle\Twig\RenderExtension">
             <tag name="twig.extension"/>
+            <tag name="sulu.context" context="website"/>
         </service>
 
         <service id="TheCocktail\Bundle\MegaMenuBundle\Twig\RenderRuntime">
             <argument type="service" id="TheCocktail\Bundle\MegaMenuBundle\Builder\MenuBuilder"/>
             <argument type="service" id="twig"/>
             <tag name="twig.runtime"/>
+            <tag name="sulu.context" context="website"/>
         </service>
     </services>
 </container>
