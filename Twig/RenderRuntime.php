@@ -21,14 +21,14 @@ class RenderRuntime implements RuntimeExtensionInterface
         $this->twig = $twig;
     }
 
-    public function render(string $webspace, string $resourceKey, string $locale, string $template = null): string
+    public function render(string $resourceKey, string $webspace, string $locale, string $template = null): string
     {
         $items = $this->builder->build($webspace, $resourceKey, $locale);
 
         return $this->twig->render($template ?? '@SuluMegamenu/section.html.twig', ['items' => $items]);
     }
 
-    public function get(string $webspace, string $resourceKey, string $locale): array
+    public function get(string $resourceKey, string $webspace, string $locale): array
     {
         return $this->builder->build($webspace, $resourceKey, $locale);
     }
