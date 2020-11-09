@@ -9,7 +9,7 @@ Create complex tree menus in Sulu with sections, image items, external url, cust
 Add SuluMegamenuBundle in your composer.json:
 
 ```shell script
-  composer requiere the-cocktail/sulu-megamenu-bundle
+  composer require the-cocktail/sulu-megamenu-bundle
 ```
 ### Register the bundle
 
@@ -62,11 +62,12 @@ Make sure you've set the correct permissions in the Sulu backend for this bundle
 
 #### sulu_megamenu_render
 
+This function will render the [default template](./Resources/views/menu.html.twig)
 ```twig
    {{ sulu_megamenu_render('header', request.webspaceKey, app.request.locale)  }}
 ```
 
-Or specify template
+Custom template as argument 
 
 ```twig
    {{ sulu_megamenu_render('header', request.webspaceKey, app.request.locale, 'menu/header.html.twig')  }}
@@ -74,22 +75,13 @@ Or specify template
 
 #### sulu_megamenu_get
 
+Get items to reuse in diferent context
 ```twig
-{% for item in sulu_megamenu_get('header', request.webspaceKey, app.request.locale) %}
-    <ul>
-      {% for item in items %}
-        <li>
-          {% if item.url %}
-            <a href="{{ item.url }}" title="{{ item.title }}">{{ item.title }}</a>
-          {% else %}
-            {{ item.title }}
-          {% endif %}
-          {% if item.hasChildren %}
-            {% include '@SuluMegamenu/section.html.twig' with {'items': item.children } %}
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
-{% endfor %}
+{% set items = sulu_megamenu_get('header', request.webspaceKey, app.request.locale) %}
+
+{% include 'menu/desktop.html.twig' %}
+{% include 'menu/mobile.html.twig' %}
 ```
-Enjoy it!
+
+
+### Enjoy it!
