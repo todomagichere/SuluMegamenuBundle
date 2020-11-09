@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of Sulu Megamenu Bundle.
+  ~
+  ~ (c) The Cocktail Expericence S.L.
+  ~
+  ~  This source file is subject to the MIT license that is bundled
+  ~  with this source code in the file LICENSE.
+  -->
+
+<!--
+  ~ /*
+  ~  * This file is part of Sulu Megamenu Bundle.
+  ~  *
+  ~  * (c) The Cocktail Expericence S.L.
+  ~  *
+  ~  * This source file is subject to the MIT license that is bundled
+  ~  * with this source code in the file LICENSE.
+  ~  */
+  -->
+
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
@@ -35,14 +55,6 @@
             <argument type="service" id="sulu.content.mapper"/>
             <argument type="service" id="cache.app.taggable"/>
             <argument type="service" id="fos_http_cache.http.symfony_response_tagger"/>
-            <tag name="sulu.context" context="website"/>
-        </service>
-
-        <service id="TheCocktail\Bundle\MegaMenuBundle\EventSubscriber\MenuBuilderSubscriber">
-            <argument type="service" id="TheCocktail\Bundle\MegaMenuBundle\Builder\MenuBuilder"/>
-            <argument type="service" id="twig"/>
-            <argument>%sulu_megamenu.menus%</argument>
-            <tag name="kernel.event_subscriber"/>
             <tag name="sulu.context" context="website"/>
         </service>
 

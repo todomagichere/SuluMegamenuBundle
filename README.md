@@ -1,29 +1,19 @@
-Instalación
-============
+# Sulu Megamenu Bundle
 
-Paso 1: Descarga el Bundle
----------------------------
+----
 
-Añade al composer.json el repositorio de git
+Create complex menus in Sulu 
+ 
+## Installation
+
+Add SuluMegamenuBundle in your composer.json:
+
+```shell script
+  composer requiere the-cocktail/sulu-megamenu-bundle
 ```
-    "repositories": [
-        {
-            "type" : "git",
-            "url" : "git@bitbucket.org:the-cocktail/sulumegamenubundle.git"
-        }
-    ],
-```
+### Register the bundle
 
-Y añadelo como dependencia a tu proyecto
-
-```console
-$ composer require the-cocktail/megamenu-bundle
-```
-
-Paso 2: Activar el Bundle
--------------------------
-
-Debes registrar el bundle en el archivo `config/bundles.php` de tu proyecto:
+Register the bundle in your `config/bundles.php`:
 
 ```php
 <?php
@@ -35,19 +25,20 @@ return [
 ];
 ```
 
-Paso 2: Cofigurar el Bundle
--------------------------
-
-Importa las rutas del admin en `config/routes/sulu_admin.yaml` :
+### Configure the routing
 
 ```yaml
+# config/routes/sulu_admin.yaml
+
 sulu_megamenu_api:
     resource: "@SuluMegamenuBundle/Resources/config/routing_api.yaml"
     type: rest
     prefix: /admin/api
 ```
 
-Añade el archivo `config/packages/sulu_megamenu.yaml` con la configuración de los distintos menus:
+### Configure SuluMegamenu
+
+Add `config/packages/sulu_megamenu.yaml` with your desired menus:
 
 ```yaml
 sulu_megamenu:
@@ -62,9 +53,11 @@ sulu_megamenu:
             twig_global: false # Opcional, este menu no estará disponible en la variable global sulu_megamenu
             title: 'Footer Bottom'
 ```
-*Debes entrar en el menu de administración y dar los permisos correspondientes para los menús* 
+### Permissions
+Make sure you've set the correct permissions in the Sulu backend for this bundle!
 
-Ahora podrás entrar en el backend de Sulu y configurar los menús. 
+`Settings > User Roles`
+
 
 Para acceder a los menús explora la variable global de Twig `sulu_megamenu` para acceder a los menus:
 
