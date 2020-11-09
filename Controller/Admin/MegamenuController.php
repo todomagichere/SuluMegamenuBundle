@@ -32,6 +32,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+/**
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
+ */
 class MegamenuController extends AbstractRestController implements ClassResourceInterface
 {
     private MenuItemRepository $repository;

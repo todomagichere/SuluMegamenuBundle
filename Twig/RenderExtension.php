@@ -16,6 +16,9 @@ namespace TheCocktail\Bundle\MegaMenuBundle\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
+ */
 class RenderExtension extends AbstractExtension
 {
     public function getFunctions()

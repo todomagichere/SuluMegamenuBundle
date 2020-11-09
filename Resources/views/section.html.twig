@@ -1,6 +1,6 @@
-<ul class="{{ resource }}__menu">
+<ul>
   {% for item in items %}
-    <li class="{{ resource }}__menu-item {{ resource }}__menu-title">
+    <li class="{{ item.resourceKey }}__menu-item">
       {% if item.url %}
         <a href="{{ item.url }}" title="{{ item.title }}">{{ item.title }}</a>
       {% else %}

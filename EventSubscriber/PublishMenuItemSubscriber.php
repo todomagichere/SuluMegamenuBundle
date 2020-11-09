@@ -17,6 +17,9 @@ use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use TheCocktail\Bundle\MegaMenuBundle\Event\MenuEvent;
 
+/**
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
+ */
 class PublishMenuItemSubscriber implements EventSubscriberInterface
 {
     private AdapterInterface $adapter;

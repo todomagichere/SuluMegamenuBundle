@@ -19,6 +19,8 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @method MenuItem|null find($id, $lockMode = null, $lockVersion = null)
+ *
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
  */
 class MenuItemRepository extends ServiceEntityRepository
 {

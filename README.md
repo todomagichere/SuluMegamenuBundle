@@ -2,7 +2,7 @@
 
 ----
 
-Create complex menus in Sulu 
+Create complex tree menus in Sulu with sections, image items, external url, custom url, etc..
  
 ## Installation
 
@@ -50,7 +50,6 @@ sulu_megamenu:
         footer:
             title: 'Footer'
         footer_bottom:
-            twig_global: false # Opcional, este menu no estará disponible en la variable global sulu_megamenu
             title: 'Footer Bottom'
 ```
 ### Permissions
@@ -59,14 +58,38 @@ Make sure you've set the correct permissions in the Sulu backend for this bundle
 `Settings > User Roles`
 
 
-Para acceder a los menús explora la variable global de Twig `sulu_megamenu` para acceder a los menus:
+## Twig Functions
 
-Ejemplo:
+#### sulu_megamenu_render
 
 ```twig
-{% for menu in sulu_megamenu.header_top %}
-    <a href="{{ menu.title }}" url="{{ menu.url }}>{{ menu.title }}</a>
-{% endfor %}
+   {{ sulu_megamenu_render('header', request.webspaceKey, app.request.locale)  }}
 ```
 
+Or specify template
+
+```twig
+   {{ sulu_megamenu_render('header', request.webspaceKey, app.request.locale, 'menu/header.html.twig')  }}
+```
+
+#### sulu_megamenu_get
+
+```twig
+{% for item in sulu_megamenu_get('header', request.webspaceKey, app.request.locale) %}
+    <ul>
+      {% for item in items %}
+        <li>
+          {% if item.url %}
+            <a href="{{ item.url }}" title="{{ item.title }}">{{ item.title }}</a>
+          {% else %}
+            {{ item.title }}
+          {% endif %}
+          {% if item.hasChildren %}
+            {% include '@SuluMegamenu/section.html.twig' with {'items': item.children } %}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+{% endfor %}
+```
 Enjoy it!

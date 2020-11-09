@@ -11,6 +11,9 @@
 
 namespace TheCocktail\Bundle\MegaMenuBundle\Exception;
 
+/**
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
+ */
 class WebspaceNotFoundException extends \Exception
 {
 

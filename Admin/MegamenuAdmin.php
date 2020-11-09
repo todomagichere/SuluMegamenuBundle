@@ -25,6 +25,9 @@ use Sulu\Component\Security\Authorization\PermissionTypes;
 use Sulu\Component\Security\Authorization\SecurityCheckerInterface;
 use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 
+/**
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
+ */
 class MegamenuAdmin extends Admin
 {
     const SECURITY_CONTEXT = 'sulu.settings.megamenu';

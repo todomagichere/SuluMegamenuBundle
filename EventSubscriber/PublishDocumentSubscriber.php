@@ -19,6 +19,9 @@ use Sulu\Component\DocumentManager\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
+/**
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
+ */
 class PublishDocumentSubscriber implements EventSubscriberInterface
 {
     private TagAwareCacheInterface $cache;

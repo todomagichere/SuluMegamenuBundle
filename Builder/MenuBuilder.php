@@ -23,6 +23,9 @@ use Sulu\Component\Content\Mapper\ContentMapperInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
+/**
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
+ */
 class MenuBuilder
 {
     private MenuItemRepository $repository;

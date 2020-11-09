@@ -17,6 +17,9 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 
+/**
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
+ */
 class SuluMegamenuExtension extends Extension implements PrependExtensionInterface
 {
     /**

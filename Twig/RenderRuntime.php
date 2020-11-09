@@ -17,6 +17,9 @@ use TheCocktail\Bundle\MegaMenuBundle\Builder\MenuBuilder;
 use Twig\Environment;
 use Twig\Extension\RuntimeExtensionInterface;
 
+/**
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
+ */
 class RenderRuntime implements RuntimeExtensionInterface
 {
     private MenuBuilder $builder;

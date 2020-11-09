@@ -14,6 +14,9 @@ namespace TheCocktail\Bundle\MegaMenuBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+/**
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
+ */
 class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
@@ -26,7 +29,6 @@ class Configuration implements ConfigurationInterface
                 ->useAttributeAsKey('resourceKey')
                     ->prototype('array')
                         ->children()
-                            ->booleanNode('twig_global')->defaultTrue()->end()
                             ->scalarNode('title')->isRequired()->end()
                         ->end()
                     ->end()

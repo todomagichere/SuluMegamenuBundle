@@ -13,6 +13,9 @@ namespace TheCocktail\Bundle\MegaMenuBundle\Event;
 
 use TheCocktail\Bundle\MegaMenuBundle\Entity\MenuItem;
 
+/**
+ * @author Pablo Lozano <lozanomunarriz@gmail.com>
+ */
 class MenuEvent
 {
     const PUBLISHED = 'sulu_megamenu.published';
