@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace TheCocktail\Bundle\MegaMenuBundle\Twig;
 
+use Sulu\Component\Webspace\Analyzer\Attributes\RequestAttributes;
+use Symfony\Component\HttpFoundation\RequestStack;
 use TheCocktail\Bundle\MegaMenuBundle\Builder\MenuBuilder;
 use Twig\Environment;
 use Twig\Extension\RuntimeExtensionInterface;
@@ -24,24 +26,68 @@ class RenderRuntime implements RuntimeExtensionInterface
 {
     private MenuBuilder $builder;
     private Environment $twig;
+    private RequestStack $requestStack;
 
     public function __construct(
         MenuBuilder $builder,
-        Environment $twig
+        Environment $twig,
+        RequestStack $requestStack
     ) {
         $this->builder = $builder;
         $this->twig = $twig;
+        $this->requestStack = $requestStack;
     }
 
-    public function render(string $resourceKey, string $webspace, string $locale, string $template = null): void
+    public function render(string $resourceKey, string $template = null, string $webspace = null, string $locale = null): void
     {
+        $webspace = $webspace ?? $this->getWebspace();
+        $locale = $locale ?? $this->getLocale();
+
+        if (null === $webspace || $locale === null) {
+            return;
+        }
+
         $items = $this->builder->build($webspace, $resourceKey, $locale);
 
         $this->twig->display($template ?? '@SuluMegamenu/section.html.twig', ['items' => $items]);
     }
 
-    public function get(string $resourceKey, string $webspace, string $locale): array
+    public function get(string $resourceKey, string $webspace = null, string $locale = null): ?array
     {
+        $webspace = $webspace ?? $this->getWebspace();
+        $locale = $locale ?? $this->getLocale();
+
+        if (null === $webspace || $locale === null) {
+            return null;
+        }
+
         return $this->builder->build($webspace, $resourceKey, $locale);
+    }
+
+    private function getWebspace(): ?string
+    {
+        if (!$request = $this->requestStack->getCurrentRequest()) {
+            return null;
+        }
+
+        if (!$attributes = $request->attributes->get('_sulu')) {
+            return null;
+        }
+
+        /** @var RequestAttributes $attributes */
+        if (!$webspace = $attributes->getAttribute('webspace')) {
+            return null;
+        }
+
+        return $webspace;
+    }
+
+    private function getLocale(): ?string
+    {
+        if (!$request = $this->requestStack->getCurrentRequest()) {
+            return null;
+        }
+
+        return $request->getLocale();
     }
 }

@@ -64,24 +64,34 @@ Make sure you've set the correct permissions in the Sulu backend for this bundle
 
 This function will render the [default template](./Resources/views/menu.html.twig)
 ```twig
-   {{ sulu_megamenu_render('header', request.webspaceKey, app.request.locale)  }}
+   {{ sulu_megamenu_render('header')  }}
 ```
 
 Custom template as argument 
 
 ```twig
-   {{ sulu_megamenu_render('header', request.webspaceKey, app.request.locale, 'menu/header.html.twig')  }}
+   {{ sulu_megamenu_render('header', 'menu/header.html.twig')  }}
+```
+
+Additional parameters 
+
+```twig
+   {{ sulu_megamenu_render('header', 'menu/header.html.twig', request.webspaceKey, app.request.locale)  }}
 ```
 
 #### sulu_megamenu_get
 
 Get items to reuse in diferent context
 ```twig
-{% set items = sulu_megamenu_get('header', request.webspaceKey, app.request.locale) %}
+{% set items = sulu_megamenu_get('header') %}
 
 {% include 'menu/desktop.html.twig' %}
 {% include 'menu/mobile.html.twig' %}
 ```
 
+Additional parameters:
+```twig
+   {{ sulu_megamenu_get('header', request.webspaceKey, app.request.locale)  }}
+```
 
 ### Enjoy it!
