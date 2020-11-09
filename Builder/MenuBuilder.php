@@ -28,6 +28,8 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
  */
 class MenuBuilder
 {
+    const MENU_ALL = 'sulu-megamenu-all';
+
     private MenuItemRepository $repository;
     private ContentMapperInterface $contentMapper;
     private TagAwareCacheInterface $cache;
@@ -49,7 +51,7 @@ class MenuBuilder
 
     public function build(string $webspace, string $resourceKey, string $locale): array
     {
-        $this->tags = [];
+        $this->tags = [self::MENU_ALL];
 
         $key = 'menu-' . $webspace . $resourceKey . $locale;
         $headersKey = 'headers-' . $webspace . $resourceKey . $locale;
