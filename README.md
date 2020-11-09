@@ -24,6 +24,18 @@ return [
     // ...
 ];
 ```
+Update your data with: 
+
+```shell script
+bin/console doctrine:schema:update --force
+```
+
+Or execute the following SQL: (recomended: use doctrine migrations to generate diff migration)
+```sql
+CREATE TABLE mm_menuitem (id INT AUTO_INCREMENT NOT NULL, media_id INT DEFAULT NULL, parent_id INT DEFAULT NULL, resource_key VARCHAR(255) NOT NULL, webspace VARCHAR(255) NOT NULL, title VARCHAR(255) NOT NULL, locale VARCHAR(255) NOT NULL, uuid VARCHAR(255) DEFAULT NULL, link VARCHAR(255) DEFAULT NULL, position INT NOT NULL, INDEX IDX_D6C6460BEA9FDD75 (media_id), INDEX IDX_D6C6460B727ACA70 (parent_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB;
+ALTER TABLE mm_menuitem ADD CONSTRAINT FK_D6C6460BEA9FDD75 FOREIGN KEY (media_id) REFERENCES me_media (id);
+ALTER TABLE mm_menuitem ADD CONSTRAINT FK_D6C6460B727ACA70 FOREIGN KEY (parent_id) REFERENCES mm_menuitem (id)
+```
 
 ### Configure the routing
 
