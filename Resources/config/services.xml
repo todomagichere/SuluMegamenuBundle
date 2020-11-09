@@ -57,6 +57,7 @@
         <service id="TheCocktail\Bundle\MegaMenuBundle\Twig\RenderRuntime">
             <argument type="service" id="TheCocktail\Bundle\MegaMenuBundle\Builder\MenuBuilder"/>
             <argument type="service" id="twig"/>
+            <argument type="service" id="request_stack"/>
             <tag name="twig.runtime"/>
             <tag name="sulu.context" context="website"/>
         </service>
