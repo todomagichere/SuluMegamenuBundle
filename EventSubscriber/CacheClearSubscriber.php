@@ -17,12 +17,12 @@ class CacheClearSubscriber implements EventSubscriberInterface
         $this->cache = $cache;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [Events::CACHE_CLEAR  => 'onCacheClear'];
     }
 
-    public function onCacheClear(CacheClearEvent $event)
+    public function onCacheClear(CacheClearEvent $event): void
     {
         $this->cache->invalidateTags([MenuBuilder::MENU_ALL]);
     }
