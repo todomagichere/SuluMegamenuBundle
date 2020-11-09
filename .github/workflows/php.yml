@@ -33,5 +33,8 @@ jobs:
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse -c phpstan.neon
 
+    - name: Run Code Sniffer
+      run: vendor/bin/phpcs
+
     - name: Run Test
       run: vendor/bin/phpunit
