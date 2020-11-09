@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace TheCocktail\Bundle\MegaMenuBundle\Twig;
 
 use Sulu\Component\Webspace\Analyzer\Attributes\RequestAttributes;
+use Sulu\Component\Webspace\Webspace;
 use Symfony\Component\HttpFoundation\RequestStack;
 use TheCocktail\Bundle\MegaMenuBundle\Builder\MenuBuilder;
 use Twig\Environment;
@@ -40,7 +41,7 @@ class RenderRuntime implements RuntimeExtensionInterface
 
     public function render(string $resourceKey, string $template = null, string $webspace = null, string $locale = null): void
     {
-        $webspace = $webspace ?? $this->getWebspace();
+        $webspace = $webspace ?? $this->getWebspaceKey();
         $locale = $locale ?? $this->getLocale();
 
         if (null === $webspace || $locale === null) {
@@ -54,7 +55,7 @@ class RenderRuntime implements RuntimeExtensionInterface
 
     public function get(string $resourceKey, string $webspace = null, string $locale = null): ?array
     {
-        $webspace = $webspace ?? $this->getWebspace();
+        $webspace = $webspace ?? $this->getWebspaceKey();
         $locale = $locale ?? $this->getLocale();
 
         if (null === $webspace || $locale === null) {
@@ -64,7 +65,7 @@ class RenderRuntime implements RuntimeExtensionInterface
         return $this->builder->build($webspace, $resourceKey, $locale);
     }
 
-    private function getWebspace(): ?string
+    private function getWebspaceKey(): ?string
     {
         if (!$request = $this->requestStack->getCurrentRequest()) {
             return null;
@@ -79,7 +80,8 @@ class RenderRuntime implements RuntimeExtensionInterface
             return null;
         }
 
-        return $webspace;
+        /** @var Webspace $webspace */
+        return $webspace->getKey();
     }
 
     private function getLocale(): ?string
