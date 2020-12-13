@@ -3,7 +3,7 @@
 /**
  * This file is part of Sulu Megamenu Bundle.
  *
- * (c) The Cocktail Expericence S.L.
+ * (c) The Cocktail Experience S.L.
  *
  *  This source file is subject to the MIT license that is bundled
  *  with this source code in the file LICENSE.
@@ -50,7 +50,10 @@ class RenderRuntime implements RuntimeExtensionInterface
 
         $items = $this->builder->build($webspace, $resourceKey, $locale);
 
-        $this->twig->display($template ?? '@SuluMegamenu/section.html.twig', ['items' => $items]);
+        $this->twig->display($template ?? '@SuluMegamenu/menu.html.twig', [
+            'items' => $items,
+            'resourceKey' => $resourceKey
+        ]);
     }
 
     public function get(string $resourceKey, string $webspace = null, string $locale = null): ?array

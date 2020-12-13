@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ This file is part of Sulu Megamenu Bundle.
-  ~
-  ~ (c) The Cocktail Expericence S.L.
-  ~
-  ~  This source file is subject to the MIT license that is bundled
-  ~  with this source code in the file LICENSE.
-  -->
-
-<!--
-  ~ /*
-  ~  * This file is part of Sulu Megamenu Bundle.
-  ~  *
-  ~  * (c) The Cocktail Expericence S.L.
-  ~  *
-  ~  * This source file is subject to the MIT license that is bundled
-  ~  * with this source code in the file LICENSE.
-  ~  */
-  -->
-
-<phpunit colors="true">
+<phpunit colors="true" bootstrap="Tests/test-bootstrap.php">
     <testsuites>
-        <testsuite name="Sulu University Bundle">
+        <testsuite name="Sulu MegaMenu Bundle">
             <directory>./Tests</directory>
         </testsuite>
     </testsuites>
@@ -38,7 +18,10 @@
     </filter>
 
     <php>
+        <server name="SYMFONY_PHPUNIT_VERSION" value="8"/>
+        <env name="KERNEL_CLASS" value="TheCocktail\Bundle\MegaMenuBundle\Tests\Application\Kernel"/>
         <env name="APP_ENV" value="test" force="true"/>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+        <server name="SYMFONY_PHPUNIT_REMOVE" value="symfony/yaml"/>
     </php>
 </phpunit>
