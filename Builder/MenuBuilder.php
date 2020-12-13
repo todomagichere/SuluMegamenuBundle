@@ -3,7 +3,7 @@
 /**
  * This file is part of Sulu Megamenu Bundle.
  *
- * (c) The Cocktail Expericence S.L.
+ * (c) The Cocktail Experience S.L.
  *
  *  This source file is subject to the MIT license that is bundled
  *  with this source code in the file LICENSE.
@@ -33,15 +33,18 @@ class MenuBuilder
     private MenuItemRepository $repository;
     private ContentMapperInterface $contentMapper;
     private TagAwareCacheInterface $cache;
-    private SymfonyResponseTagger $responseTagger;
+    private ?SymfonyResponseTagger $responseTagger;
 
+    /**
+     * @var string[] $tags
+     */
     private array $tags;
 
     public function __construct(
         MenuItemRepository $repository,
         ContentMapperInterface $contentMapper,
         TagAwareCacheInterface $cache,
-        SymfonyResponseTagger $responseTagger
+        ?SymfonyResponseTagger $responseTagger
     ) {
         $this->repository = $repository;
         $this->contentMapper = $contentMapper;
@@ -75,7 +78,9 @@ class MenuBuilder
             return $this->tags;
         });
 
-        $this->responseTagger->addTags($headersTags);
+        if ($this->responseTagger) {
+            $this->responseTagger->addTags($headersTags);
+        }
 
         return $menu;
     }
@@ -102,7 +107,8 @@ class MenuBuilder
                 'title' => $menuItem->getTitle(),
                 'url' => $url,
                 'media' => $media ? $media->getId() : null,
-                'hasChildren' => $menuItem->hasChildren()
+                'hasChildren' => $menuItem->hasChildren(),
+                'resourceKey' => $menuItem->getResourceKey()
             ];
             if ($menuItem->getChildren()->count()) {
                 $item['children'] = $this->recursiveList($menuItem->getChildren()->toArray());

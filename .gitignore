@@ -35,3 +35,6 @@ npm-debug.log
 .php_cs.cache
 php-cs-fixer
 .phpcs-cache
+
+#Test
+Tests/Application/var
