@@ -2,7 +2,7 @@
     "name": "the-cocktail/sulu-megamenu-bundle",
     "description": "Bundle for managing Mega Menus in the Sulu content management system",
     "type": "sulu-bundle",
-    "license": "proprietary",
+    "license": "MIT",
     "homepage": "https://the-cocktail.com",
     "require": {
         "php": ">=7.4",
