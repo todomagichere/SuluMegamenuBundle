@@ -19,18 +19,18 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - php-version: '7.4'
-                      phpcr-transport: doctrinedbal
-                      composer-flags: '--prefer-dist --no-interaction'
-                      php-extensions: 'ctype, iconv, mysql, imagick'
-                      tools: 'composer:v2'
-                      phpstan: true
-                      lint-container: true
-                      env:
-                          SYMFONY_DEPRECATIONS_HELPER: disabled
-                          PHPCR_TRANSPORT: doctrinedbal
-                          DATABASE_CHARSET: UTF8
-                          DATABASE_COLLATE: UTF8_BIN
+                    -   php-version: '7.4'
+                        phpcr-transport: doctrinedbal
+                        composer-flags: '--prefer-dist --no-interaction'
+                        php-extensions: 'ctype, iconv, mysql, imagick'
+                        tools: 'composer:v2'
+                        phpstan: true
+                        lint-container: true
+                        env:
+                            SYMFONY_DEPRECATIONS_HELPER: disabled
+                            PHPCR_TRANSPORT: doctrinedbal
+                            DATABASE_CHARSET: UTF8
+                            DATABASE_COLLATE: UTF8_BIN
 
         services:
             mysql:
@@ -42,7 +42,16 @@ jobs:
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
 
         steps:
-            -   uses: actions/checkout@v2
+            -   name: Checkout project
+                uses: actions/checkout@v2
+
+            -   name: Install and configure PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-version }}
+                    extensions: ${{ matrix.php-extensions }}
+                    tools: ${{ matrix.tools }}
+                    coverage: none
 
             -   name: Validate composer.json and composer.lock
                 run: composer validate
@@ -60,16 +69,16 @@ jobs:
                 if: steps.composer-cache.outputs.cache-hit != 'true'
                 run: composer install --prefer-dist --no-progress
 
-            - name: Run PHPStan
-              run: vendor/bin/phpstan analyse -c phpstan.neon
+            -   name: Run PHPStan
+                run: vendor/bin/phpstan analyse -c phpstan.neon
 
-            - name: Run Code Sniffer
-              run: vendor/bin/phpcs
+            -   name: Run Code Sniffer
+                run: vendor/bin/phpcs
 
-            - name: Bootstrap test environment
-              run: composer bootstrap-test-environment
-              env: ${{ matrix.env }}
+            -   name: Bootstrap test environment
+                run: composer bootstrap-test-environment
+                env: ${{ matrix.env }}
 
-            - name: Run tests
-              run: time vendor/bin/phpunit
-              env: ${{ matrix.env }}
+            -   name: Run tests
+                run: time vendor/bin/phpunit
+                env: ${{ matrix.env }}
