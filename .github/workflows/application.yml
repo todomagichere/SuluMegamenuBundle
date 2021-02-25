@@ -31,6 +31,18 @@ jobs:
                             PHPCR_TRANSPORT: doctrinedbal
                             DATABASE_CHARSET: UTF8
                             DATABASE_COLLATE: UTF8_BIN
+                    -   php-version: '8.0'
+                        phpcr-transport: doctrinedbal
+                        composer-flags: '--prefer-dist --no-interaction'
+                        php-extensions: 'ctype, iconv, mysql, imagick'
+                        tools: 'composer:v2'
+                        phpstan: true
+                        lint-container: true
+                        env:
+                            SYMFONY_DEPRECATIONS_HELPER: disabled
+                            PHPCR_TRANSPORT: doctrinedbal
+                            DATABASE_CHARSET: UTF8
+                            DATABASE_COLLATE: UTF8_BIN
 
         services:
             mysql:

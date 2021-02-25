@@ -201,7 +201,9 @@ class MegamenuController extends AbstractRestController implements ClassResource
         }
 
         $data['locale'] = $request->query->get('locale');
-        $data['webspace'] = $request->query->get('webspace');
+        if (!$data['webspace'] = $request->query->get('webspace')) {
+            throw new WebspaceNotFoundException();
+        }
 
         $entity->setTitle($data['title']);
         $entity->setLocale($data['locale']);
