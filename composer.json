@@ -7,7 +7,7 @@
     "require": {
         "php": ">=7.4",
         "doctrine/doctrine-bundle": "^1.0 || ^2.0",
-        "sulu/sulu": "^2.0.6",
+        "sulu/sulu": "^2.1",
         "symfony/config": "^4.3 || ^5.0",
         "symfony/dependency-injection": "^4.3 || ^5.0",
         "symfony/http-foundation": "^4.3 || ^5.0",
